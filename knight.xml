@@ -1,0 +1,208 @@
+<!--
+      Example steering file to run a standard reconstruction on the 3 ttbar events 
+      simulated with Mokka in this example dierectory.
+
+      Works with ilcsoft v01-15 (development release)
+
+      Defines the standard reconstruction for ILD.
+-->
+
+
+ <marlin>
+   
+   <execute>
+     <!--processor name="Mylichcheck"/-->
+     <!--processor name="Myfunctional"/-->
+     <!--processor name="MyTotalInvMass"/-->
+     <!--processor name="MymmhzzTotalInvMass"/-->
+     <!--processor name="MyValidation"/-->
+     <!--processor name="MyHmumu"/-->
+     <!--processor name="MyTauAna"/-->
+     <!--processor name="MyJetClustering"/-->
+     <!--processor name="MyJetClustering2"/-->
+     <!--processor name="MysoftLink2quark"/-->
+     <!--processor name="MyClusterAna"/-->
+     <!--processor name="MyZtoqq"/-->
+     <processor name="MyeventShape"/>
+     <!--processor name="MyGetML"/-->
+     <!--processor name="MyMCPnngamma"/-->
+     <!--processor name="Myhiggs2zz"/-->
+     </execute>
+
+     <global>
+     <parameter name="LCIOInputFiles">
+     LCIOINPUT
+ </parameter>
+<!--parameter name="GearXMLFile" value="/afs/ihep.ac.cn/users/z/zhuyf/cefs/workspace/yudan/simulation/nnhwwzz/ww/GearOutput.xml"/-->
+     <parameter name="MaxRecordNumber" value="-1"/>
+     <parameter name="SkipNEvents" value="-1"/>
+     <parameter name="SupressCheck" value="false"/>
+     <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+     <parameter name="RandomSeed" value="1234567890" />
+     </global>
+
+ <processor name="Myhiggs2zz" type="higgs2zz">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+
+ <processor name="MyClusterAna" type="ClusterAna">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MyZtoqq" type="Ztoqq">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+
+ <processor name="MyeventShape" type="eventShape">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+
+ <processor name="MysoftLink2quark" type="softLink2quark">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MyGetML" type="GetML">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MyMCPnngamma" type="MCPnngamma">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor> 
+
+ <processor name="MyTauAna" type="TauAna">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+<processor name="MyJetClustering" type="JetClustering">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MyTotalInvMass" type="TotalInvMass">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+ <processor name="Mylichcheck" type="lichcheck">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MymmhzzTotalInvMass" type="mmhzzTotalInvMass">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+ <processor name="MyValidation" type="Validation">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+<processor name="Myfunctional" type="functional">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+<processor name="MyHmumu" type="Hmumu">
+  <!--Print MC Truth-->
+  <!--If zero an already existing file will not be overwritten.-->
+  <parameter name="OverwriteFile" type="int">1 </parameter>
+    <!--The name of the file to which the ROOT tree will be written-->
+  <parameter name="TreeOutputFile" type="string"> OUTROOT  </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+</processor>
+
+
+     </marlin>
