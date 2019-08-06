@@ -210,12 +210,16 @@ void CalcuThrustMCP(std::vector<MCParticle* > UsedForThrust, std::vector<double>
     
 }
 
-void CalcuThrustReco(std::vector<ReconstructedParticle* > UsedForThrust, std::vector<double> &result){
+//double CalcuMagnitude(std::vector<short> &sign, )
+
+void CalcuThrustReco(std::vector<ReconstructedParticle* > UsedForThrust, std::vector<double> &result)
+{
     result.clear();
     double T = 0;
-    TVector3 n_T = (0,0,0);
+    TVector3 n_T(0,0,0);
+    TVector3 n_Ttmp(0,0,0);
     //the following code used to calculate the thrust, the calculation method at https://doi.org/10.1016/0021-9991(83)90010-4
-    std::vector<short> s(UsedForThrust.size(),1)      //this vector used to store the sign of P_i
+    std::vector<short> s(UsedForThrust.size(),1);      //this vector used to store the sign of P_i
     int i, j, k = 0;
 
     for(i = 0; i<UsedForThrust.size(); i++)
@@ -226,20 +230,37 @@ void CalcuThrustReco(std::vector<ReconstructedParticle* > UsedForThrust, std::ve
         {
             ReconstructedParticle* particle_j = UsedForThrust.at(j);
             TVector3 P_j = particle_j->getMomentum();
+            n_Ttmp.SetXYZ(0,0,0);
             for(k=0; k<UsedForThrust.size(); k++)
             {
                 if (k == i || k == j) continue;
                 ReconstructedParticle* particle_k = UsedForThrust.at(k);
                 TVector3 P_k = particle_k->getMomentum();
                 //calculate P_k * (P_i X P_j)
+                double stmp = 0;
                 stmp = P_k(1)*(P_i(2)*P_j(3) - P_i(3)*P_j(2)) + P_k(2)*(P_i(3)*P_j(1) - P_i(1)*P_j(3)) + P_k(3)*(P_i(1)*P_j(2) - P_i(2)*P_j(1));
                 if (stmp >= 0) s[k] = 1;
                 if (stmp < 0) s[k] = -1;
-                
+                //s[i] = 1; s[j] = -1;
+                n_Ttmp += s[k] * P_k;
+
 
             }
+            //4 combinations of s_i and s_j
+            s[i]=1;s[j]=1; n_Ttmp += s[i] * P_i + s[j] * P_j; if (n_Ttmp.Mag()>T) {T = n_Ttmp.Mag();n_T = n_Ttmp.Unit();}
+            s[i]=1;s[j]=-1; n_Ttmp += s[i] * P_i + s[j] * P_j; if (n_Ttmp.Mag()>T) {T = n_Ttmp.Mag();n_T = n_Ttmp.Unit();}
+            s[i]=-1;s[j]=1; n_Ttmp += s[i] * P_i + s[j] * P_j; if (n_Ttmp.Mag()>T) {T = n_Ttmp.Mag();n_T = n_Ttmp.Unit();}
+            s[i]=-1;s[j]=-1; n_Ttmp += s[i] * P_i + s[j] * P_j; if (n_Ttmp.Mag()>T) {T = n_Ttmp.Mag();n_T = n_Ttmp.Unit();}
         }
     }
+    double normlization = 0;
+    for (i = 0; i<UsedForThrust.size(); i++)
+    {
+        ReconstructedParticle* particle_a = UsedForThrust.at(i);
+        TVector3 P_a = particle_a->getMomentum();
+        normlization += P_a.Mag();
+    }
+    T = T / normlization;
 
 
 
@@ -247,7 +268,7 @@ void CalcuThrustReco(std::vector<ReconstructedParticle* > UsedForThrust, std::ve
     result.push_back(T);
     
     TVector3 tempThrust(0,0,0);
-    tempThrust.SetXYZ(sin(thetaMin)*cos(phiMin), sin(thetaMin)*sin(phiMin), cos(thetaMin));
+    tempThrust = n_T;
     
     //the following code used to get Hemisphere masses
     std::vector<ReconstructedParticle* > hemisphere1;
